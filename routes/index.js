@@ -31,7 +31,7 @@ router.get('/api/messages', function(routerReq, routerRes, routerNext) {
 
 router.post('/api/messages', function(routerReq, routerRes, routerNext) {
 	console.log("POST /api/messages routed")
-	console.log("Incoming body: "+routerReq.body);
+	console.log("Incoming body: "+JSON.stringify(routerReq.body));
 	console.log('Dispatching to '+process.env.WALL_SERVICE_BASEURL+'/v1/message')
 	
 	
