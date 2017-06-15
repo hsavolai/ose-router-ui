@@ -14,6 +14,7 @@ router.get('/api/messages', function(routerReq, routerRes, routerNext) {
 	request.get(process.env.WALL_SERVICE_BASEURL+'/v1/message',function(err,res,body){
 		routerRes.setHeader('Content-Type', 'application/json');
 		routerRes.setHeader('Access-Control-Allow-Origin','*' );
+        try {
 		reqArray=JSON.parse(body);
 		routerRes.send(reqArray._embedded.message.map(filterResults));
 
@@ -25,7 +26,10 @@ router.get('/api/messages', function(routerReq, routerRes, routerNext) {
 			
 			return message;
 		}
-	
+        } catch(ex) {
+        	console.log(ex);
+    		routerRes.status(400).json("{status:error}");		        	
+        }
 	});
 });
 
