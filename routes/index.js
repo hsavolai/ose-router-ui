@@ -47,7 +47,7 @@ router.post('/api/messages', function(routerReq, routerRes, routerNext) {
 		routerRes.setHeader('Access-Control-Allow-Origin','*' );
 		routerRes.status(400).json("{status:error}");		
 	} else {
-		    console.log("Ougoing body: "+routerReq.body);
+		    console.log("Ougoing body: "+JSON.stringify(routerReq.body));
 			
 			request.post({url: process.env.WALL_SERVICE_BASEURL+'/v1/message', json: routerReq.body});
 			routerRes.setHeader('Access-Control-Allow-Origin','*' );
