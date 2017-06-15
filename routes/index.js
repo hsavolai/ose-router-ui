@@ -10,8 +10,8 @@ router.get('/', function(req, res, next) {
 
 router.get('/api/messages', function(routerReq, routerRes, routerNext) {
 	console.log("GET /api/messages routed")
+	console.log('Dispatching to '+process.env.WALL_SERVICE_BASEURL+'/v1/message')
 	request.get(process.env.WALL_SERVICE_BASEURL+'/v1/message',function(err,res,body){
-		console.log('Dispatching to '+process.env.WALL_SERVICE_BASEURL+'/v1/message')
 		routerRes.setHeader('Content-Type', 'application/json');
 		routerRes.setHeader('Access-Control-Allow-Origin','*' );
 		reqArray=JSON.parse(body);
@@ -31,9 +31,9 @@ router.get('/api/messages', function(routerReq, routerRes, routerNext) {
 
 router.post('/api/messages', function(routerReq, routerRes, routerNext) {
 	console.log("POST /api/messages routed")
+	console.log('Dispatching to '+process.env.WALL_SERVICE_BASEURL+'/v1/message')
 	request.post({url: process.env.WALL_SERVICE_BASEURL+'/v1/message',
 		json: routerReq.body});
-	console.log('Dispatching to '+process.env.WALL_SERVICE_BASEURL+'/v1/message')
 	routerRes.setHeader('Access-Control-Allow-Origin','*' );
 	routerRes.status(201).json("{status:created}");
 });
