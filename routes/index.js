@@ -31,11 +31,32 @@ router.get('/api/messages', function(routerReq, routerRes, routerNext) {
 
 router.post('/api/messages', function(routerReq, routerRes, routerNext) {
 	console.log("POST /api/messages routed")
+	console.log("Incoming body: "+routerReq.body);
 	console.log('Dispatching to '+process.env.WALL_SERVICE_BASEURL+'/v1/message')
-	request.post({url: process.env.WALL_SERVICE_BASEURL+'/v1/message',
-		json: routerReq.body});
-	routerRes.setHeader('Access-Control-Allow-Origin','*' );
-	routerRes.status(201).json("{status:created}");
+	
+	
+	if (!routerReq.body.alias) { routerReq.body.alias = "anonymous"}
+	
+	var today = new Date();
+	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	routerReq.body.date = date+' '+time;
+
+
+	if (!routerReq.body.content) { 
+		routerRes.setHeader('Access-Control-Allow-Origin','*' );
+		routerRes.status(400).json("{status:error}");		
+	} else {
+		    console.log("Ougoing body: "+routerReq.body);
+			
+			request.post({url: process.env.WALL_SERVICE_BASEURL+'/v1/message', json: routerReq.body});
+			routerRes.setHeader('Access-Control-Allow-Origin','*' );
+			routerRes.status(201).json("{status:created}");	
+	}
+	
+		
+	
+   
 });
 
 router.options('/api/messages', function(routerReq, routerRes, routerNext) {
