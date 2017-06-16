@@ -9,9 +9,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/sanity', function(req, res, next) {
-	routerRes.setHeader('Access-Control-Allow-Origin','*' );
-	routerRes.setHeader('Access-Control-Allow-Headers','Content-Type');
-	routerRes.status(200).json("{status:alive}");
+	res.setHeader('Access-Control-Allow-Origin','*' );
+	res.setHeader('Access-Control-Allow-Headers','Content-Type');
+	res.status(200).json("{status:alive}");
 });
 
 router.get('/api/messages', function(routerReq, routerRes, routerNext) {
