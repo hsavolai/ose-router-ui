@@ -8,6 +8,12 @@ router.get('/', function(req, res, next) {
   res.redirect('/wall');
 });
 
+router.get('/sanity', function(req, res, next) {
+	routerRes.setHeader('Access-Control-Allow-Origin','*' );
+	routerRes.setHeader('Access-Control-Allow-Headers','Content-Type');
+	routerRes.status(200).json("{status:alive}");
+});
+
 router.get('/api/messages', function(routerReq, routerRes, routerNext) {
 	console.log("GET /api/messages routed")
 	console.log('Dispatching to '+process.env.WALL_SERVICE_BASEURL+'/v1/message')
